@@ -87,26 +87,49 @@ module.exports = {
         }
     },
 
-    //search function
-    search: async function(req,res){
-        const qname=req.query.name||"";
-        const qAge=parseint(req.query.age);
+    // search function
+    search: async function (req, res) {
 
-        if(isNaN(qAge)){
-            var person=await person.find({
-                where: {name: {contains:qname}},
-                sort: 'name'
-            })
-        }else{
-            var persons=await Person.find({
-                where: {nme: {contains: qName}, age: qAge},
+        const qName = req.query.name || "";
+        const qAge = parseInt(req.query.age);
+
+        if (isNaN(qAge)) {
+
+            var persons = await Person.find({
+                where: { name: { contains: qName } },
                 sort: 'name'
             });
+
+        } else {
+
+            var persons = await Person.find({
+                where: { name: { contains: qName }, age: qAge },
+                sort: 'name'
+            });
+
         }
 
-        return res.view('person/index', {'persons': persons});
-        
-    }
+        return res.view('person/index', { 'persons': persons });
+    },
+
+    // action - paginate
+    paginate: async function (req, res) {
+
+        const qPage = Math.max(req.query.page - 1, 0) || 0;
+
+        const numOfItemsPerPage = 2;
+
+        var persons = await Person.find({
+            limit: numOfItemsPerPage,
+            skip: numOfItemsPerPage * qPage
+        });
+
+        var numOfPage = Math.ceil(await Person.count() / numOfItemsPerPage);
+
+        return res.view('person/paginate', { 'persons': persons, 'count': numOfPage });
+    },
+
+    
 };
 
 

@@ -9,7 +9,7 @@
  * https://sailsjs.com/config/bootstrap
  */
 
-module.exports.bootstrap = async function() {
+module.exports.bootstrap = async function () {
 
   // By convention, this is a good place to set up fake data during development.
   //
@@ -27,4 +27,19 @@ module.exports.bootstrap = async function() {
   // ]);
   // ```
 
+  // if (await Person.count() > 0) {
+  //   return done();
+  // }
+
+  await Person.createEach([
+    { name: "Martin Choy", age: 23 },
+    { name: "Kenny Cheng", age: 22 }
+    // etc.
+  ]);
+
+  await User.createEach([
+    { "username": "admin", "password": "123456" },
+    { "username": "boss", "password": "123456" }
+    // etc.
+  ]);
 };

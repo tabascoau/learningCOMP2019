@@ -19,7 +19,8 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/': { view: 'pages/homepage' },
+  // '/': { view: 'pages/homepage' },
+  '/':'PersonController.index',
 
 
   /***************************************************************************
@@ -34,6 +35,6 @@ module.exports.routes = {
   ***************************************************************************/
   'GET /person/view/:id': 'PersonController.view',
   'POST /person/delete/:id': 'PersonController.delete',
-  'GET /person/update/:id' : 'PersonController.update',
-  'POST /person/update/:id':'PersonController.update',
+  'GET /person/update/:id': 'PersonController.update',
+  'POST /person/update/:id': 'PersonController.update',
 };
